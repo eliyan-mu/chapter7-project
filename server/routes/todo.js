@@ -48,4 +48,19 @@ router.post("/", function (req, res, next) {
   addToTable("todo", columns, values, res);
 });
 
+/* GET ALL TODOS. */
+router.get(`/:user_id`, function (req, res, next) {
+  con.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected!");
+  });
+  var sql = `SELECT * FROM todo WHERE user_id = ${Number(req.params.user_id)}`;
+  console.log("sql: ", sql);
+  return con.query(sql, function (err, result) {
+    if (err) throw err;
+
+    return res.status(200).send(result);
+  });
+});
+
 module.exports = router;
