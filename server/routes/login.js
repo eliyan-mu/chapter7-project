@@ -9,28 +9,42 @@ var con = mysql.createConnection({
   database: "project7database",
 });
 
+con.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
 router.post(`/`, function (req, res, next) {
-  con.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
-
-  const { username } = req.body;
-
+  // check if username exist
+  const { username, password } = req.body;
   if (!username) {
     return res.status(400).send("username is required");
   }
 
   var sql = `SELECT id FROM user WHERE username = ?`;
-  con.query(sql, [username], function (err, result) {
-    console.log("result: ", result);
-    if (err) throw err;
-    if (result.length > 0) {
-      return res.status(200).send(result[0].id);
+  con.query(sql, [username], function (err, usernameResult) {
+    if (err) {
+      res.status(500).send("Internal server error");
+    }
+    if (usernameResult.length > 0) {
+      var sql = `SELECT password FROM user_password WHERE user_id = ${usernameResult[0].id}`;
+      con.query(sql, function (err, passwordResult) {
+        if (err) {
+          res.status(500).json("Internal server error");
+        }
+        if (passwordResult[0].password === password) {
+          console.log("usernameResult[0].id: ", usernameResult[0].id);
+          return res.status(200).json(usernameResult[0].id);
+        } else {
+          return res.status(404).json("Username or password incurrect");
+        }
+      });
     } else {
-      return res.status(404).send("User not found");
+      return res.status(404).json("User not found");
     }
   });
+
+  // check if password match
 });
 
 module.exports = router;
