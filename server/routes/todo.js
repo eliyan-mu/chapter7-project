@@ -1,34 +1,21 @@
 var express = require("express");
 var router = express.Router();
 const mysql = require("mysql");
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "z10mz10m",
-  database: "project7database",
-});
+const { addToTable, deleteFromTable } = require("../public/utils.js");
+
+// var con = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "z10mz10m",
+//   database: "project7database",
+// });
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.send("Entered todo route");
 });
 
-// Function to insert data into a specific table
-function addToTable(tableName, columns, values, res) {
-  const sql = `INSERT INTO ${tableName} (${columns.join(",")}) VALUES (?)`;
-  console.log("SQL: ", sql);
-
-  con.query(sql, [values], function (err, result) {
-    if (err) {
-      console.error("Error inserting data:", err);
-      res.status(500).send("Error inserting data into the database.");
-      return;
-    }
-    console.table(result);
-    res.status(200).send("Todo added successfully!");
-  });
-}
-
+//add
 // POST request to add a new todo
 router.post("/", function (req, res, next) {
   const newTodo = req.body;
@@ -46,6 +33,19 @@ router.post("/", function (req, res, next) {
   const values = [newTodo.title, newTodo.user_id, newTodo.completed];
 
   addToTable("todo", columns, values, res);
+});
+
+//delete
+
+router.delete("/:id", function (req, res, next) {
+  const deletedId = req.params.id;
+
+  deleteFromTable("todo", deletedId, function (err) {
+    if (err) {
+      return res.status(500).send("Error deleting item");
+    }
+    res.status(200).send("Todo deleted successfully");
+  });
 });
 
 /* GET ALL TODOS. */

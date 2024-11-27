@@ -1,13 +1,7 @@
 var express = require("express");
 var router = express.Router();
-var mysql = require("mysql");
-
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "z10mz10m",
-  database: "project7database",
-});
+const mysql = require("mysql");
+const { addToTable, deleteFromTable } = require("../public/utils.js");
 
 router.get("/", function (req, res, next) {
   res.send("entered comment route");
@@ -38,4 +32,31 @@ router.get("/", function (req, res, next) {
   res.send("entered user route");
 });
 
+//add comments
+// POST request to add a new todo
+router.post("/", function (req, res, next) {
+  const newComment = req.body;
+
+  // Make sure all required fields are present
+  if (!newComment.post_id || !newComment.name || !newComment.body) {
+    return res.status(400).send("Missing required fields.");
+  }
+
+  const columns = ["post_id", "name", "body"];
+  const values = [newComment.post_id, newComment.name, newComment.body];
+
+  addToTable("comment", columns, values, res);
+});
+
+//delete
+router.delete("/:id", function (req, res, next) {
+  const deletedId = req.params.id;
+
+  deleteFromTable("comment", deletedId, function (err) {
+    if (err) {
+      return res.status(500).send("Error deleting item");
+    }
+    res.status(200).send("comment deleted successfully");
+  });
+});
 module.exports = router;
