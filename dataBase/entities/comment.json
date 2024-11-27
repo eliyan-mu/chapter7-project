@@ -1,6 +1,6 @@
 {
   "id": "INT AUTO_INCREMENT PRIMARY KEY",
   "post_id": "INT",
-  "name": "VATCHAR(225)",
+  "name": "VARCHAR(225)",
   "body": "TEXT"
 }
