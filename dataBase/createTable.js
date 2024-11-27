@@ -26,7 +26,6 @@ const createTables = function () {
 
     Object.keys(fileContent).forEach(function (key, index) {
       columns += `${key} ${fileContent[key]}, `;
-      console.log("columns: ", columns);
     });
     columns = columns.slice(0, -2);
 
