@@ -1,6 +1,6 @@
-var mysql = require("mysql");
 var express = require("express");
 var router = express.Router();
+var mysql = require("mysql");
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -9,15 +9,18 @@ var con = mysql.createConnection({
   database: "project7database",
 });
 
-const toGet = function (sql) {
+router.get(`/`, function (req, res, next) {
   con.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
   });
-  return con.query(sql, function (err, result) {
+
+  var sql = `SELECT users_name FROM user WHERE user_id=3`;
+  con.query(sql, function (err, result) {
     if (err) throw err;
-    return res.status(200).send(result);
+    return res.status(200).send(`You've successfully deleted the student`);
   });
-};
+  res.send("successfll login");
+});
 
 module.exports = router;
