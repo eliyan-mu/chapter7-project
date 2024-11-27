@@ -9,13 +9,15 @@ var con = mysql.createConnection({
   database: "project7database",
 });
 
+let user_id = 3;
+
 /* GET users listing. */
-router.get("/", function (req, res, next) {
+router.get(`/`, function (req, res, next) {
   res.send("successfll login");
 });
 
 // get name of user
-router.get("/3", function (req, res) {
+router.get(`/${user_id}`, function (req, res) {
   con.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
@@ -28,7 +30,7 @@ router.get("/3", function (req, res) {
 });
 
 // get todos of users
-router.get("/user_id/todos", function (req, res) {
+router.get(`/${user_id}/todos`, function (req, res) {
   con.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
