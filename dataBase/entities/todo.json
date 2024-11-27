@@ -1,0 +1,6 @@
+{
+  "id": "INT PRIMARY KEY AUTO_INCREMENT",
+  "user_id": "VARCHAR(50) FOREIGN KEY",
+  "title": "VARCHAR(50)",
+  "completed": "BOOLEAN)"
+}
