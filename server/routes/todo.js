@@ -20,6 +20,7 @@ router.get(`/:user_id`, function (req, res, next) {
     console.log("Connected!");
   });
   var sql = `SELECT * FROM todo WHERE user_id = ${Number(req.params.user_id)}`;
+  console.log("sql: ", sql);
   return con.query(sql, function (err, result) {
     if (err) throw err;
 

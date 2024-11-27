@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const mysql = require("mysql");
+var mysql = require("mysql");
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -9,18 +9,23 @@ var con = mysql.createConnection({
   database: "project7database",
 });
 
-/* add school. */
-router.post("/", async function (req, res, next) {
-  console.log("req: ", req.body.adminId);
-  if (await adminPassword(req.body.adminId, req.body.password)) {
-    columns = ["name", "school_code"];
-    values = [req.body.name, req.body.school_code];
+router.get("/", function (req, res, next) {
+  res.send("entered post route");
+});
 
-    addToTable("school", columns, values);
-    res.send("respond with a resource");
-  } else {
-    res.send("password incorrect");
-  }
+/* GET ALL posts. */
+router.get(`/:user_id`, function (req, res, next) {
+  con.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected!");
+  });
+  var sql = `SELECT * FROM post WHERE user_id = ${Number(req.params.user_id)}`;
+  console.log("sql: ", sql);
+  return con.query(sql, function (err, result) {
+    if (err) throw err;
+
+    return res.status(200).send(result);
+  });
 });
 
 module.exports = router;
