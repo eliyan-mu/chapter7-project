@@ -13,7 +13,6 @@ const createTables = function () {
     if (err) throw err;
     console.log("Connected!");
   });
-
   let tablesArr = ["comment", "post", "user", "todo", "user_password"];
 
   let columns;
