@@ -15,12 +15,14 @@ router.get(`/`, function (req, res, next) {
     console.log("Connected!");
   });
 
-  var sql = `SELECT users_name FROM user WHERE user_id=3`;
+  var sql = `SELECT id FROM user WHERE username = ${req.body.username}`;
   con.query(sql, function (err, result) {
+    console.log("result: ", result);
     if (err) throw err;
-    return res.status(200).send(`You've successfully deleted the student`);
+    return res.status(200).send(`query result is ${result}`);
   });
-  res.send("successfll login");
+  // res.json(res);
+  res.send("not successfll login");
 });
 
 module.exports = router;
