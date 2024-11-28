@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchItems, fetchAddItem } from "../RequestUlits"; // Importing fetchAddItem
+import { fetchItems, fetchAddItem, fetchDelete } from "../RequestUlits"; // Importing fetchAddItem
 import { FaSearch } from "react-icons/fa";
 import searchItem from "../function";
 
@@ -60,7 +60,7 @@ function ToDo() {
   const deleteItem = (id) => {
     const updatedToDoList = toDoList.filter((item) => item.id !== id);
     setToDoList(updatedToDoList);
-    fetchDelete(`todos/${id}`);
+    fetchDelete(`todo/${id}`);
   };
 
   // Handle text change during editing
