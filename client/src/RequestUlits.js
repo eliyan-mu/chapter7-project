@@ -10,3 +10,20 @@ export async function fetchItems(URL) {
     return error;
   }
 }
+
+//add todolist
+export async function fetchAddItem(URL, item) {
+  console.log("URL: ", URL);
+  console.log("item: ", item);
+  return await fetch(`http://localhost:3000/${URL}`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+    body: JSON.stringify(item),
+  }).then((response) => {
+    console.log(response);
+    return response.json();
+  });
+  //.then((json) => console.log(json));
+}
