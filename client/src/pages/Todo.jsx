@@ -121,7 +121,7 @@ function ToDo() {
       <p>Hello, here is your To-Do List:</p>
 
       <div style={styles.searchContainer}>
-        {/* <FaSearch style={styles.searchIcon} /> */}
+        <FaSearch style={styles.searchIcon} />
         <input
           type="text"
           value={searchQuery}

@@ -3,7 +3,7 @@ import React from "react";
 const NoPage = () => {
   return (
     <div>
-      <h2>This page does net exist</h2>
+      <h2>This page does not exist</h2>
     </div>
   );
 };

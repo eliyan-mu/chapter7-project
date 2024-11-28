@@ -19,6 +19,7 @@ const Signup = () => {
       email: email,
       password: password,
     };
+
     try {
       const res = await fetch("http://localhost:3000/signup", {
         method: "POST",
@@ -29,19 +30,27 @@ const Signup = () => {
       });
 
       const result = await res.json();
+      console.log("result: ", result);
 
-      if (result.userId) {
-        navigate(`/home/${result.userId}`);
+      if (res.status !== 200) {
+        if (res.status === 509) alert(result.message);
+      } else if (result.user.userId) {
+        navigate(`/home/${result.user.userId}`);
+        let userInfo = JSON.stringify({
+          user_id: result.user.userId,
+          username: username,
+        });
+        localStorage.setItem("currentUser", userInfo);
       } else {
-        alert("Username or password is incorrect, please try again");
+        alert("signup was not successful.");
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.log("Error:", error);
       alert("An error occurred, please try again later.");
     }
 
     setUsername("");
-    setPassword("");
+    setUsers_name("");
     setEmail("");
     setPassword("");
   };
