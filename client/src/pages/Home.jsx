@@ -5,16 +5,17 @@ function Home() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    navigate("/");
+    localStorage.clear();
+    navigate("/login");
   };
   return (
     <>
       <p>Home Page</p>
       <div style={{ marginTop: "-200    px" }}>
         <button onClick={handleLogout}>log-out</button>
-        <NavLink to="/home">
+        {/* <NavLink to="/home">
           <button>Home</button>
-        </NavLink>
+        </NavLink> */}
         <NavLink to="/todo">
           <button>To-Do</button>
         </NavLink>
