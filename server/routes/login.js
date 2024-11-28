@@ -45,8 +45,5 @@ router.post(`/`, function (req, res, next) {
       return res.status(404).json({ message: "User not found" });
     }
   });
-
-  // check if password match
 });
-
 module.exports = router;
