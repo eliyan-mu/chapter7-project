@@ -1,7 +1,8 @@
 var express = require("express");
 var router = express.Router();
 const mysql = require("mysql");
-const { addToTable, deleteFromTable } = require("../public/utils.js");
+const { deleteFromTable } = require("../utilities/delete.js");
+const { addToTable } = require("../utilities/add.js");
 
 // var con = mysql.createConnection({
 //   host: "localhost",
