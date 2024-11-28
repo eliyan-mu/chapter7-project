@@ -3,23 +3,29 @@ var router = express.Router();
 const mysql = require("mysql");
 const { addToTable, deleteFromTable } = require("../public/utils.js");
 
-// var con = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "z10mz10m",
-//   database: "project7database",
-// });
-
-router.get("/", function (req, res, next) {
-  res.send("entered post route");
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "z10mz10m",
+  database: "project7database",
 });
 
-//add post
-// POST request to add a new todo
+// GET all posts for a specific user
+router.get("/:user_id", function (req, res, next) {
+  const userId = req.params.user_id;
+  var sql = `SELECT * FROM post WHERE user_id = ${mysql.escape(userId)}`;
+  con.query(sql, function (err, result) {
+    if (err) {
+      return res.status(500).send("Error fetching posts");
+    }
+    res.status(200).send(result);
+  });
+});
+
+// POST request to add a new post
 router.post("/", function (req, res, next) {
   const newPost = req.body;
 
-  // Make sure all required fields are present
   if (!newPost.title || !newPost.user_id || !newPost.body) {
     return res.status(400).send("Missing required fields.");
   }
@@ -30,15 +36,16 @@ router.post("/", function (req, res, next) {
   addToTable("post", columns, values, res);
 });
 
-//delete
+// DELETE a post by ID
 router.delete("/:id", function (req, res, next) {
-  const deletedId = req.params.id;
+  const postId = req.params.id;
 
-  deleteFromTable("post", deletedId, function (err) {
+  deleteFromTable("post", postId, function (err) {
     if (err) {
-      return res.status(500).send("Error deleting item");
+      return res.status(500).send("Error deleting post");
     }
-    res.status(200).send("post deleted successfully");
+    res.status(200).send("Post deleted successfully");
   });
 });
+
 module.exports = router;
