@@ -7,6 +7,7 @@ const cors = require("cors");
 
 var indexRouter = require("./routes/index");
 var loginRouter = require("./routes/login");
+var signupRouter = require("./routes/signup");
 var userRouter = require("./routes/user");
 var user_passwordRouter = require("./routes/user_password");
 var todoRouter = require("./routes/todo");
@@ -33,6 +34,7 @@ app.use("/user_password", user_passwordRouter);
 app.use("/todo", todoRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter);
+app.use("/signup", signupRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

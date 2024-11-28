@@ -13,9 +13,14 @@ const Signup = () => {
     e.preventDefault();
 
     // send fetch request
-    const data = { username: username, password: password };
+    const data = {
+      username: username,
+      users_name: users_name,
+      email: email,
+      password: password,
+    };
     try {
-      const res = await fetch("http://localhost:3000/login", {
+      const res = await fetch("http://localhost:3000/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +42,7 @@ const Signup = () => {
 
     setUsername("");
     setPassword("");
-    setUsers_name("");
+    setEmail("");
     setPassword("");
   };
 
@@ -61,17 +66,17 @@ const Signup = () => {
             type="text"
             id="users_name"
             value={users_name}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsers_name(e.target.value)}
             required
           />
         </div>
         <div>
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="email">Email:</label>
           <input
             type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
@@ -86,8 +91,6 @@ const Signup = () => {
           />
         </div>
         <button type="submit">Signup</button>
-
-        <button onClick={navigate(`/home`)}>Sign Up</button>
       </form>
     </div>
   );

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchItems } from "../RequestUlits";
-import { FaSearch } from "react-icons/fa";
+// import { FaSearch } from "react-icons/fa";
 import searchItem from "../function";
-import { FaZ } from "react-icons/fa6";
 
 function ToDo() {
   const [toDoList, setToDoList] = useState([]);
@@ -112,7 +111,7 @@ function ToDo() {
       <p>Hello, here is your To-Do List:</p>
 
       <div style={styles.searchContainer}>
-        <FaSearch style={styles.searchIcon} />
+        {/* <FaSearch style={styles.searchIcon} /> */}
         <input
           type="text"
           value={searchQuery}
