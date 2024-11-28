@@ -9,7 +9,7 @@ function Home() {
   };
   return (
     <>
-      <p>Hello!!</p>
+      <p>Home Page</p>
       <div style={{ marginTop: "-200    px" }}>
         <button onClick={handleLogout}>log-out</button>
         <NavLink to="/home">
