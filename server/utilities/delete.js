@@ -4,17 +4,22 @@ const con = require("../con");
 
 const path = require("path");
 
-function deleteFromTable(tableName, deletedId, callback) {
+function deleteFromTable(tableName, deletedId, res) {
+  console.log("res: ", res);
   const sql = "DELETE FROM ?? WHERE id = ?";
+  console.log("SQL: ", sql);
+
   con.query(sql, [tableName, deletedId], (err, result) => {
     if (err) {
       console.error("Error deleting record:", err);
-      return callback(err);
+      res.status(500).send("Error deleting data from the database.");
+      return;
     }
     console.log("Deleted result:", result);
-    callback(null);
+    res.status(200).send("Record deleted successfully.");
   });
 }
+
 module.exports = {
   deleteFromTable,
 };

@@ -30,16 +30,10 @@ router.post("/", async function (req, res, next) {
 });
 
 //delete
-
 router.delete("/:id", function (req, res, next) {
   const deletedId = req.params.id;
 
-  deleteFromTable("todo", deletedId, function (err) {
-    if (err) {
-      return res.status(500).send("Error deleting item");
-    }
-    res.status(200).send("Todo deleted successfully");
-  });
+  deleteFromTable("todo", deletedId, res);
 });
 
 /* GET ALL TODOS. */

@@ -1,3 +1,4 @@
+//get all of the item
 export async function fetchItems(URL) {
   try {
     const response = await fetch(`http://localhost:3000/${URL}`);
@@ -11,10 +12,8 @@ export async function fetchItems(URL) {
   }
 }
 
-//add todolist
+//add to item
 export async function fetchAddItem(URL, item) {
-  console.log("URL: ", URL);
-  console.log("item: ", item);
   return await fetch(`http://localhost:3000/${URL}`, {
     method: "POST",
     headers: {
@@ -26,4 +25,17 @@ export async function fetchAddItem(URL, item) {
     return response.json();
   });
   //.then((json) => console.log(json));
+}
+
+//delete item
+export async function fetchDelete(URL) {
+  return await fetch(`http://localhost:3000/${URL}`, {
+    method: "DELETE",
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((response) => response.json())
+    //.then((json) => console.log(json));
+    .catch((e) => alert(e));
 }
