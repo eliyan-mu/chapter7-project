@@ -24,27 +24,26 @@ router.post(`/`, function (req, res, next) {
   var sql = `SELECT id FROM user WHERE username = ?`;
   con.query(sql, [username], function (err, usernameResult) {
     if (err) {
-      res.status(500).send("Internal server error");
+      res.status(500).send({ message: "Internal server error" });
     }
     if (usernameResult.length > 0) {
       var sql = `SELECT password FROM user_password WHERE user_id = ${usernameResult[0].id}`;
       con.query(sql, function (err, passwordResult) {
         if (err) {
-          res.status(500).json("Internal server error");
+          res.status(500).json({ message: "Internal server error" });
         }
         if (passwordResult[0].password === password) {
-          console.log("usernameResult[0].id: ", usernameResult[0].id);
-          return res.status(200).json(usernameResult[0].id);
+          console.log("usernameResult[0].id ", usernameResult[0].id);
+          return res.status(200).json({ userId: usernameResult[0].id });
         } else {
-          return res.status(404).json("Username or password incurrect");
+          return res
+            .status(404)
+            .json({ message: "Username or password incurrect" });
         }
       });
     } else {
-      return res.status(404).json("User not found");
+      return res.status(404).json({ message: "User not found" });
     }
   });
-
-  // check if password match
 });
-
 module.exports = router;
