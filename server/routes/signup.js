@@ -53,22 +53,23 @@ router.post(`/`, function (req, res, next) {
               return res.status(500).send({
                 message: "Internal server error in insertPasswordSql",
               });
+            } else {
+              let userInfo = {
+                userId,
+                username,
+              };
+
+              return res.status(200).json({
+                user: userInfo,
+                message: "Signup successful",
+              });
             }
-            let userInfo = JSON.stringify({
-              user_id: userId,
-              username: username,
-            });
-            localStorage.setItem("currentUser", userInfo);
-            return res.status(200).json({
-              userId: userId,
-              message: "Signup successful",
-            });
           });
         }
       );
     } else {
       // If username already exists
-      return res.status(404).json({ message: "Username taken" });
+      return res.status(509).json({ message: "Username taken" });
     }
   });
 });
