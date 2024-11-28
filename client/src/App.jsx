@@ -23,6 +23,7 @@ function App() {
             <Route path="home/:user_id" index element={<Home />} />
             <Route path="post" element={<Post />} />
             <Route path="todo" element={<Todo />} />
+            <Route path="todo/:id" element={<Todo />} />
             <Route path="*" element={<NoPage />} />
           </Route>
         </Routes>

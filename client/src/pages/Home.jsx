@@ -15,10 +15,10 @@ function Home() {
         <NavLink to="/home">
           <button>Home</button>
         </NavLink>
-        <NavLink to="todo">
+        <NavLink to="/todo">
           <button>To-Do</button>
         </NavLink>
-        <NavLink to="post">
+        <NavLink to="/post">
           <button>Posts</button>
         </NavLink>
       </div>
