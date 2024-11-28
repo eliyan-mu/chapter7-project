@@ -11,11 +11,12 @@ function ToDo() {
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState("");
   const [ascending, setAscending] = useState(true);
-  const userId = JSON.parse(localStorage.getItem("currentUser")).id;
+  const userId = JSON.parse(localStorage.getItem("currentUser")).user_id;
+  //   const userId = 3;
 
   useEffect(() => {
     async function fetchToDoList() {
-      const data = await fetchItems(`todos?userId=${userId}`);
+      const data = await fetchItems(`todo/${userId}`);
       console.log(data);
       if (!data) {
         console.log("Error fetching albums;");

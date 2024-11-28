@@ -17,6 +17,7 @@ con.connect(function (err) {
 router.post(`/`, function (req, res, next) {
   // check if username exist
   const { username, password } = req.body;
+  console.log("req.body: ", req.body);
   if (!username) {
     return res.status(400).send("username is required");
   }

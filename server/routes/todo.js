@@ -3,6 +3,7 @@ var router = express.Router();
 const mysql = require("mysql");
 const { deleteFromTable } = require("../utilities/delete.js");
 const { addToTable } = require("../utilities/add.js");
+const con = require("./../con.js");
 
 // var con = mysql.createConnection({
 //   host: "localhost",
@@ -12,9 +13,9 @@ const { addToTable } = require("../utilities/add.js");
 // });
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.send("Entered todo route");
-});
+// router.get("/", function (req, res, next) {
+//   res.send("Entered todo route");
+// });
 
 //add
 // POST request to add a new todo
@@ -51,15 +52,12 @@ router.delete("/:id", function (req, res, next) {
 
 /* GET ALL TODOS. */
 router.get(`/:user_id`, function (req, res, next) {
-  con.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-  });
   var sql = `SELECT * FROM todo WHERE user_id = ${Number(req.params.user_id)}`;
   console.log("sql: ", sql);
   return con.query(sql, function (err, result) {
     if (err) throw err;
 
+    console.log("result: ", result);
     return res.status(200).send(result);
   });
 });
