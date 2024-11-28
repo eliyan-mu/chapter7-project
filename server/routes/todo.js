@@ -19,20 +19,12 @@ const con = require("./../con.js");
 
 //add
 // POST request to add a new todo
-router.post("/", function (req, res, next) {
+router.post("/", async function (req, res, next) {
   const newTodo = req.body;
-
-  // Make sure all required fields are present
-  if (
-    !newTodo.title ||
-    !newTodo.user_id ||
-    typeof newTodo.completed === "undefined"
-  ) {
-    return res.status(400).send("Missing required fields.");
-  }
+  console.log("req.body: ", req.body);
 
   const columns = ["title", "user_id", "completed"];
-  const values = [newTodo.title, newTodo.user_id, newTodo.completed];
+  const values = [newTodo.title, newTodo.userId, newTodo.completed];
 
   addToTable("todo", columns, values, res);
 });

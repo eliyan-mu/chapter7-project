@@ -16,7 +16,7 @@ function addToTable(tableName, columns, values, res) {
       return;
     }
     console.table(result);
-    res.status(200).send(" added successfully!");
+    res.status(200).json({ id: result.insertId });
   });
 }
 module.exports = {
