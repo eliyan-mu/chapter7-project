@@ -48,4 +48,22 @@ router.get(`/:user_id`, function (req, res, next) {
   });
 });
 
+//rename pust
+router.put("/:id", function (req, res, next) {
+  const { id } = req.params;
+  const { title } = req.body;
+
+  const sql = "UPDATE todo SET title = ? WHERE id = ?";
+  con.query(sql, [title, id], (err, result) => {
+    if (err) {
+      console.error("Error updating record:", err);
+      res.status(500).send("Error updating the to-do item.");
+      return;
+    }
+
+    console.log("Updated result:", result);
+    res.status(200).send({ id, title });
+  });
+});
+
 module.exports = router;
