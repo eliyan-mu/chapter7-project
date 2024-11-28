@@ -35,8 +35,12 @@ const Signup = () => {
       if (res.status !== 200) {
         if (res.status === 509) alert(result.message);
       } else if (result.user.userId) {
-        navigate(`/home/${result.userId}`);
-        localStorage.setItem("currentUser", result.user);
+        navigate(`/home/${result.user.userId}`);
+        let userInfo = JSON.stringify({
+          user_id: result.user.userId,
+          username: username,
+        });
+        localStorage.setItem("currentUser", userInfo);
       } else {
         alert("signup was not successful.");
       }
