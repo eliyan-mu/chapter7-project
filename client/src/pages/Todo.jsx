@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { fetchItems, fetchAddItem, fetchDelete } from "../RequestUlits"; // Importing fetchAddItem
+import {
+  fetchItems,
+  fetchAddItem,
+  fetchDelete,
+  fetchEditItem,
+} from "../RequestUlits";
 import { FaSearch } from "react-icons/fa";
 import searchItem from "../function";
 
@@ -12,7 +17,7 @@ function ToDo() {
   const [ascending, setAscending] = useState(true);
   const userId = JSON.parse(localStorage.getItem("currentUser")).user_id;
 
-  // Fetch to-do list on component mount
+  // show item
   useEffect(() => {
     async function fetchToDoList() {
       const data = await fetchItems(`todo/${userId}`);
@@ -27,7 +32,7 @@ function ToDo() {
     fetchToDoList();
   }, [userId]);
 
-  // Handle checkbox change (mark as completed)
+  // Handle checkbox
   const handleCheckboxChange = (id) => {
     setToDoList((prevList) =>
       prevList.map((item) =>
@@ -69,14 +74,19 @@ function ToDo() {
   };
 
   // Save edited To-Do item
-  const saveEdit = (id) => {
-    setToDoList((prevList) =>
-      prevList.map((item) =>
-        item.id === id ? { ...item, title: editingText } : item
-      )
-    );
-    setEditingId(null); // Exit editing mode
-    setEditingText(""); // Clear the input field
+  const saveEdit = async (id) => {
+    const updatedItem = { id, title: editingText };
+    const updatedData = await fetchEditItem(`todo/${id}`, updatedItem);
+
+    if (updatedData) {
+      setToDoList((prevList) =>
+        prevList.map((item) =>
+          item.id === id ? { ...item, title: editingText } : item
+        )
+      );
+      setEditingId(null); // Exit editing mode
+      setEditingText(""); // Clear the input field
+    }
   };
 
   // Handle sorting by completion status

@@ -39,3 +39,24 @@ export async function fetchDelete(URL) {
     //.then((json) => console.log(json));
     .catch((e) => alert(e));
 }
+
+// Edit To-Do item
+export async function fetchEditItem(URL, item) {
+  try {
+    const response = await fetch(`http://localhost:3000/${URL}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(item),
+    });
+
+    if (!response.ok) throw new Error("Error updating the item!");
+
+    const updatedItem = await response.json();
+    return updatedItem;
+  } catch (error) {
+    alert(error);
+    return null;
+  }
+}
